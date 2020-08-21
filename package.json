@@ -1,0 +1,15 @@
+{
+  "name": "randomizer",
+  "version": "1.0.0",
+  "description": "Random groups generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --coverage --verbose",
+    "watch": "jest --watchAll --coverage --verbose"
+  },
+  "author": "joseph-zabaleta",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^6.0.0"
+  }
+}
