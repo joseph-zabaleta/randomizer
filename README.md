@@ -19,9 +19,6 @@ randon --collections (shows a list of all available collections)
 rando --triple -t
 rando --quad -q
 
-
-
-
 ## Authors
 - Software Developer: Joseph Zabaleta
   - [Official Github](https://github.com/joseph-zabaleta)
