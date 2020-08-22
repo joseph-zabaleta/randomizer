@@ -35,6 +35,9 @@ function shuffle(records) {
 
 
 
+
+
+
 if (userInput.import) {
     // console.log('I am file path!', userInput.import);
     let records = [];
@@ -117,12 +120,9 @@ if (userInput.import) {
 
 
 } else if (userInput.pairs === true) {
-    console.log('pairs has been selected');
     let currentSet = 'python';
     let activeCollection;
     let records;
-
-
     let parseData;
 
     try {
@@ -143,7 +143,6 @@ if (userInput.import) {
     parseData.forEach(collection => {
         if (collection.name === currentSet) {
             activeCollection = collection;
-            // console.log(collection);
         };
     });
 
@@ -160,46 +159,120 @@ if (userInput.import) {
         matrix.push([]);
     };
 
-    console.log('records lenght==', records.length)
-    console.log(matrix.length);
+
+    let flag = false;
 
     // fill matrix
     for (let i = 0; i < records.length; i++) {
-        let current = records[i];
+        let currentRecord = records[i];
+        let nextRecord = (i + 1 !== records.length) ? records[i + 1] : null;
 
         if (i < matrix.length) {
 
-            matrix[i].push(current);
+            matrix[i].push(currentRecord);
 
         } else {
             let index = i - matrix.length;
-
             let firstPerson = matrix[index][0];
+            let secondPerson = (index + 1 !== matrix.length)  ? matrix[index + 1][0] : null;
 
-            firstPerson.lastMatch = [];
-            firstPerson.lastMatch.push(current.id);
 
-            current.lastMatch = [];
-            current.lastMatch.push(firstPerson.id);
+            /**Compare last matches */
 
-            matrix[index].push(current);
+            if (firstPerson.lastMatch.length === 0) {
+                firstPerson.lastMatch = [];
+                firstPerson.lastMatch.push(currentRecord.id);
+                matrix[index].push(currentRecord);
+            } else {
+
+
+
+
+
+
+                if ( (nextRecord !== null) &&
+                        (secondPerson !== null) &&
+                        (flag) &&
+                        (secondPerson.lastMatch.includes(nextRecord.id)) ) {
+
+                            console.log('1st if', i, index);
+
+                    firstPerson.lastMatch = [];
+                    firstPerson.lastMatch.push(nextRecord.id)
+                    nextRecord.lastMatch = [];
+                    nextRecord.lastMatch.push(firstPerson.id);
+                    matrix[index].push(nextRecord);
+
+                    secondPerson.lastMatch = [];
+                    secondPerson.lastMatch.push(currentRecord.id)
+                    currentRecord.lastMatch = [];
+                    currentRecord.lastMatch.push(secondPerson.id);
+                    matrix[index + 1].push(currentRecord);
+
+                    flag = true;
+
+                } else if (flag) {
+
+                    flag = false;
+                    continue;
+
+                } else if ( ((nextRecord !== null) &&
+                            (secondPerson !== null)) &&
+                            ((firstPerson.lastMatch.includes(currentRecord.id)) ||
+                            (secondPerson.lastMatch.includes(nextRecord.id))) ) {
+
+                                console.log('2nd if', i, index);
+
+                    firstPerson.lastMatch = [];
+                    firstPerson.lastMatch.push(nextRecord.id)
+                    nextRecord.lastMatch = [];
+                    nextRecord.lastMatch.push(firstPerson.id);
+                    matrix[index].push(nextRecord);
+
+                    secondPerson.lastMatch = [];
+                    secondPerson.lastMatch.push(currentRecord.id)
+                    currentRecord.lastMatch = [];
+                    currentRecord.lastMatch.push(secondPerson.id);
+                    matrix[index + 1].push(currentRecord);
+
+                    flag = true;
+
+                }  else {
+                    firstPerson.lastMatch = [];
+                    firstPerson.lastMatch.push(currentRecord.id);
+                    currentRecord.lastMatch = [];
+                    currentRecord.lastMatch.push(firstPerson.id);
+                    matrix[index].push(currentRecord);
+                };
+
+            };
+
+
+
         };
 
     };
 
-    // console.log(activeCollection);
 
-    // console.log(parseData[0].records);
 
+
+
+
+function pizza(){
+
+};
+
+
+
+
+
+
+
+    console.log(JSON.stringify(matrix));
+
+    /**Save the modified data back to the data json file */
     let jsonData = JSON.stringify(parseData)
-
-
     fs.writeFileSync('./data/collections.json', jsonData);
-
-    console.log('finished pairs');
-
-
-
 
 
 
