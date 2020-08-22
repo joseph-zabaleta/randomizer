@@ -120,160 +120,176 @@ if (userInput.import) {
 
 
 } else if (userInput.pairs === true) {
-    let currentSet = 'python';
-    let activeCollection;
-    let records;
-    let parseData;
 
-    try {
-        let rawData = fs.readFileSync('./data/collections.json');
-        parseData = JSON.parse(rawData);
+    for (let i = 0; i < 100; i ++) {
 
+        let currentSet = 'python';
+        let activeCollection;
+        let records;
+        let parseData;
 
-    } catch(err){
-        if (err.code === 'ENOENT'){
-            throw Error('Unable to assign pairs with no available collections. Please import a new collection')
-
-        } else {
-            throw Error(err);
-        }
-    };
+        try {
+            let rawData = fs.readFileSync('./data/collections.json');
+            parseData = JSON.parse(rawData);
 
 
-    parseData.forEach(collection => {
-        if (collection.name === currentSet) {
-            activeCollection = collection;
-        };
-    });
+        } catch(err){
+            if (err.code === 'ENOENT'){
+                throw Error('Unable to assign pairs with no available collections. Please import a new collection')
 
-    records = activeCollection.records;
-
-    //shuffle records data
-    shuffle(records);
-
-
-    let matrix = [];
-
-    //shell out the matrix
-    for (let i = 0; i < records.length / 2; i++) {
-        matrix.push([]);
-    };
-
-
-    let flag = false;
-
-    // fill matrix
-    for (let i = 0; i < records.length; i++) {
-        let currentRecord = records[i];
-        let nextRecord = (i + 1 !== records.length) ? records[i + 1] : null;
-
-        if (i < matrix.length) {
-
-            matrix[i].push(currentRecord);
-
-        } else {
-            let index = i - matrix.length;
-            let firstPerson = matrix[index][0];
-            let secondPerson = (index + 1 !== matrix.length)  ? matrix[index + 1][0] : null;
-
-
-            /**Compare last matches */
-
-            if (firstPerson.lastMatch.length === 0) {
-                firstPerson.lastMatch = [];
-                firstPerson.lastMatch.push(currentRecord.id);
-                matrix[index].push(currentRecord);
             } else {
+                throw Error(err);
+            }
+        };
+
+
+        parseData.forEach(collection => {
+            if (collection.name === currentSet) {
+                activeCollection = collection;
+            };
+        });
+
+        records = activeCollection.records;
+
+        //shuffle records data
+        shuffle(records);
+
+        // records.forEach(record => {
+        //     console.log(record.first_name);
+        // })
+
+
+        let matrix = [];
 
 
 
+        //shell out the matrix
+        for (let i = 0; i < records.length / 2; i++) {
+            matrix.push([]);
+        };
 
 
+        let flag = false;
 
-                if ( (nextRecord !== null) &&
-                        (secondPerson !== null) &&
-                        (flag) &&
-                        (secondPerson.lastMatch.includes(nextRecord.id)) ) {
+        // fill matrix
+        for (let i = 0; i < records.length; i++) {
+            let currentRecord = records[i];
+            let nextRecord = (i + 1 !== records.length) ? records[i + 1] : null;
 
-                            console.log('1st if', i, index);
+            if (i < matrix.length) {
 
-                    firstPerson.lastMatch = [];
-                    firstPerson.lastMatch.push(nextRecord.id)
-                    nextRecord.lastMatch = [];
-                    nextRecord.lastMatch.push(firstPerson.id);
-                    matrix[index].push(nextRecord);
+                matrix[i].push(currentRecord);
 
-                    secondPerson.lastMatch = [];
-                    secondPerson.lastMatch.push(currentRecord.id)
-                    currentRecord.lastMatch = [];
-                    currentRecord.lastMatch.push(secondPerson.id);
-                    matrix[index + 1].push(currentRecord);
+            } else {
+                let index = i - matrix.length;
+                let firstPerson = matrix[index][0];
+                let secondPerson = (index + 1 !== matrix.length)  ? matrix[index + 1][0] : null;
 
-                    flag = true;
 
-                } else if (flag) {
+                /**Compare last matches */
 
-                    flag = false;
-                    continue;
-
-                } else if ( ((nextRecord !== null) &&
-                            (secondPerson !== null)) &&
-                            ((firstPerson.lastMatch.includes(currentRecord.id)) ||
-                            (secondPerson.lastMatch.includes(nextRecord.id))) ) {
-
-                                console.log('2nd if', i, index);
-
-                    firstPerson.lastMatch = [];
-                    firstPerson.lastMatch.push(nextRecord.id)
-                    nextRecord.lastMatch = [];
-                    nextRecord.lastMatch.push(firstPerson.id);
-                    matrix[index].push(nextRecord);
-
-                    secondPerson.lastMatch = [];
-                    secondPerson.lastMatch.push(currentRecord.id)
-                    currentRecord.lastMatch = [];
-                    currentRecord.lastMatch.push(secondPerson.id);
-                    matrix[index + 1].push(currentRecord);
-
-                    flag = true;
-
-                }  else {
+                if (firstPerson.lastMatch.length === 0) {
                     firstPerson.lastMatch = [];
                     firstPerson.lastMatch.push(currentRecord.id);
-                    currentRecord.lastMatch = [];
-                    currentRecord.lastMatch.push(firstPerson.id);
                     matrix[index].push(currentRecord);
+                } else {
+
+                    if ( (nextRecord !== null) &&
+                            (secondPerson !== null) &&
+                            (flag) &&
+                            (secondPerson.lastMatch.includes(nextRecord.id)) ) {
+
+                                // console.log('1st if', i, index);
+
+                        let problemChild = matrix[index].pop();
+
+                        firstPerson.lastMatch = [];
+                        firstPerson.lastMatch.push(nextRecord.id)
+                        nextRecord.lastMatch = [];
+                        nextRecord.lastMatch.push(firstPerson.id);
+                        matrix[index].push(nextRecord);
+
+                        secondPerson.lastMatch = [];
+                        secondPerson.lastMatch.push(problemChild.id)
+                        problemChild.lastMatch = [];
+                        problemChild.lastMatch.push(secondPerson.id);
+                        // currentRecord.lastMatch = [];
+                        // currentRecord.lastMatch.push(secondPerson.id);
+                        matrix[index + 1].push(problemChild);
+
+                        flag = true;
+
+                    } else if (flag) {
+
+                        flag = false;
+                        continue;
+
+                    } else if ( ((nextRecord !== null) &&
+                                (secondPerson !== null)) &&
+                                ((firstPerson.lastMatch.includes(currentRecord.id)) ||
+                                (secondPerson.lastMatch.includes(nextRecord.id))) ) {
+
+                                    // console.log('2nd if', i, index);
+
+                        firstPerson.lastMatch = [];
+                        firstPerson.lastMatch.push(nextRecord.id)
+                        nextRecord.lastMatch = [];
+                        nextRecord.lastMatch.push(firstPerson.id);
+                        matrix[index].push(nextRecord);
+
+                        secondPerson.lastMatch = [];
+                        secondPerson.lastMatch.push(currentRecord.id)
+                        currentRecord.lastMatch = [];
+                        currentRecord.lastMatch.push(secondPerson.id);
+                        matrix[index + 1].push(currentRecord);
+
+                        flag = true;
+
+                    }  else {
+                        firstPerson.lastMatch = [];
+                        firstPerson.lastMatch.push(currentRecord.id);
+                        currentRecord.lastMatch = [];
+                        currentRecord.lastMatch.push(firstPerson.id);
+                        matrix[index].push(currentRecord);
+                    };
+
                 };
+
+
 
             };
 
-
-
         };
 
-    };
+
+        // matrix.forEach(group => {
+        //     let output = [];
+
+        //     group.forEach(person => {
+        //         output.push(person.first_name);
+        //     });
+
+        //     console.log(output);
+
+        // })
 
 
+        // let jsonData = JSON.stringify(parseData)
+        // fs.writeFileSync('./data/collections.json', jsonData);
 
+        matrix.forEach(group => {
+            if (group.length !== 2){
+                let output = [];
 
+                    group.forEach(person => {
+                        output.push(person.first_name);
+                    });
 
+                    console.log(output);
+            };
+        });
 
-function pizza(){
-
-};
-
-
-
-
-
-
-
-    console.log(JSON.stringify(matrix));
-
-    /**Save the modified data back to the data json file */
-    let jsonData = JSON.stringify(parseData)
-    fs.writeFileSync('./data/collections.json', jsonData);
-
+    }
 
 
 } else {
