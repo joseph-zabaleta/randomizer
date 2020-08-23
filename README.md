@@ -1,7 +1,32 @@
 # Randomizer
 
+## Table of Contents
+---
+- [Randomizer](#randomizer)
+    - [Installation](#installation)
+    - [Commands](#commands)
+
+---
+
 ## Overview
 This application is designed to assign random groups from a CSV file. They can be pairs, triples, quads, etc. It will read the CSV file, produce groups based on input and will keep track of the previous iteration so pairs will not be the same two times in a row.
+
+## Installation
+(Coming soon...)
+```bash
+npm install randomizer
+```
+
+## Commands
+All publically available commands are listed below.
+
+### Import
+Import allows you to import a new set of data from a local csv file. This is the first command to run after initial installation. This is also how you add additional collections to use.
+
+```bash
+rando --import path/to/example.csv
+```
+
 
 ## Features To Accomplish End Goal syntax
 
