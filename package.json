@@ -4,12 +4,25 @@
   "description": "Random groups generator",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "import-dummy": "node index.js -i ./documents/files/dummyData.csv",
     "test": "jest --coverage --verbose",
     "watch": "jest --watchAll --coverage --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joseph-zabaleta/randomizer.git"
   },
   "author": "joseph-zabaleta",
   "license": "ISC",
   "dependencies": {
-    "commander": "^6.0.0"
-  }
+    "commander": "^6.0.0",
+    "csv-parser": "^2.3.3",
+    "node-fs": "^0.1.7",
+    "uuid": "^8.3.0"
+  },
+  "bugs": {
+    "url": "https://github.com/joseph-zabaleta/randomizer/issues"
+  },
+  "homepage": "https://github.com/joseph-zabaleta/randomizer#readme"
 }
