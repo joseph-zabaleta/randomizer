@@ -31,7 +31,7 @@ but for now use `npm install` after cloning the down the repo. You have the foll
 ```bash
 $ node index.js <options>
 ```
-Also npm start is support as follows:
+Also npm start is supported as follows:
 ```bash
 $ npm start -- <options>
 ```
