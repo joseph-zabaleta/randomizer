@@ -68,12 +68,12 @@ Import Successful: Collection Name: My first Collection
 
 ### Default
 `--default` or `-d` will inform you of the current active set or if a value is provided, update the current active set to the value provided. Note the value provided must be an available collection, meaning it has already been imported for use.
-```
+```bash
 $ rando --default
 Current set: example
 ```
 OR
-```
+```bash
 $ rando --default
 Current set: example
 
