@@ -11,6 +11,7 @@
         - [Default](#default)
         - [List](#list)
         - [Pairs](#pairs)
+        - [Last Group](#last-group)
     - [Authors](#authors)
     - [Collaborations](#collaborations)
     - [License](#license)
@@ -22,9 +23,22 @@ This application is designed to assign random groups from a CSV file. They can b
 
 
 ## Installation
-(Coming soon...)
+(Coming soon...) but for now use `npm install` after cloning the down the repo.
 ```bash
 $ npm install randomizer
+```
+but for now use `npm install` after cloning the down the repo. You have the following options to run this program:
+```bash
+$ node index.js <options>
+```
+Also npm start is support as follows:
+```bash
+$ npm start -- <options>
+```
+
+To get started you can set up some dummy data like so:
+```bash
+$ npm run import-dummy
 ```
 
 ## Commands
@@ -113,6 +127,25 @@ last_name: Nance
 ***************
 ```
 The results are logged to the console. Currently there is a history of one, which means if you run `--pairs` multiple times, you will not get the same result twice in a row.
+
+### Last Group
+`--last-group` will provide the last grouping called. It will log the results to the console.
+```bash
+$ rando --last-group
+
+***************
+
+Group: 1
+first_name: Eveleen
+last_name: Kittredge
+
+first_name: Elinor
+last_name: Zahor
+
+***************
+
+...etc
+```
 
 
 ## Authors
