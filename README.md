@@ -23,7 +23,7 @@ This application is designed to assign random groups from a CSV file. They can b
 
 
 ## Installation
-(Coming soon...) but for now use `npm install` after cloning the down the repo.
+(Coming soon...)
 ```bash
 $ npm install randomizer
 ```
@@ -94,6 +94,10 @@ Available Collections:
 ### Pairs
 `--pairs` or `-p` requires at least one set to be imported. Once a data set has been imported and set, running pairs will randomly group the collection into pairs. They are grouped based off the rows of the imported CSV file. The rows are what are grouped.
 
+The results are logged to the console. Currently there is a history of one, which means if you run `--pairs` multiple times, you will not get the same result twice in a row.
+
+Note: The displaying of the properties is directly related to the columns of the imported CSV file. Currently the application only prints the first two columns of the CSV files, in the example below our headers were `first_name` and `last_name`.
+
 ```bash
 $ rando --pairs
 
@@ -126,7 +130,6 @@ last_name: Nance
 
 ***************
 ```
-The results are logged to the console. Currently there is a history of one, which means if you run `--pairs` multiple times, you will not get the same result twice in a row.
 
 ### Last Group
 `--last-group` will provide the last grouping called. It will log the results to the console.
