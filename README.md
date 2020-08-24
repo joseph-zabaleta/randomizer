@@ -8,8 +8,13 @@
     - [Commands](#commands)
         - [Import](#import)
         - [Cname](#cname)
+        - [Default](#default)
         - [List](#list)
         - [Pairs](#pairs)
+    - [Authors](#authors)
+    - [Collaborations](#collaborations)
+    - [License](#license)
+    - [Acknowledgements / Resources](#acknowledgements-/-resources)
 ---
 
 ## Overview
@@ -42,18 +47,34 @@ Every import will save the data as a new collection and set it as the current se
 `--cname` or Collection name is to be used only when importing new collections. Its a secondary flag to be used with import to assign custom names to your collections.
 
 ```bash
-$ randon --import path/to/example.csv --cname "My first Collection"
+$ rando --import path/to/example.csv --cname "My first Collection"
 Import Successful: Collection Name: My first Collection
 ```
 - Note: Collection Names are unique
 
+### Default
+`--default` or `-d` will inform you of the current active set or if a value is provided, update the current active set to the value provided. Note the value provided must be an available collection, meaning it has already been imported for use.
+```
+$ rando --default
+Current set: example
+```
+OR
+```
+$ rando --default
+Current set: example
+
+$ rando --default example2
+Current set: example2
+```
 
 ### List
 `--list` provides a list of all available/imported collections and will let you know which collection is the current set.
 ```bash
 $ rando --list
 Current Set: example
-[class01, class02, example]
+
+Available Collections:
+[example, example2, example3]
 ```
 
 ### Pairs
@@ -61,23 +82,47 @@ Current Set: example
 
 ```bash
 $ rando --pairs
-[ 'Giorgio', 'Mellisent' ]
-[ 'Mallorie', 'Gunter' ]
-[ 'Burgess', 'Tonie' ]
-[ 'Worden', 'Itch' ]
-[ 'Lorilyn' ]
+
+***************
+
+Group: 1
+first_name: Eveleen
+last_name: Kittredge
+
+first_name: Elinor
+last_name: Zahor
+
+***************
+
+Group: 2
+first_name: Drusy
+last_name: Ferrarin
+
+first_name: Charil
+last_name: Breakey
+
+***************
+
+Group: 3
+first_name: Halsy
+last_name: Annable
+
+first_name: Cece
+last_name: Nance
+
+***************
 ```
 The results are logged to the console. Currently there is a history of one, which means if you run `--pairs` multiple times, you will not get the same result twice in a row.
 
 
 ## Authors
 - Software Developer: Joseph Zabaleta
-  - [Official Github](https://github.com/joseph-zabaleta)
+    - [Official Github](https://github.com/joseph-zabaleta)
 
 
 ## Collaborations
-- none
-
+- Software Engineer: Kevin Matthiesen
+    - [Official Github](https://github.com/kmatthiesen)
 
 ## License
 This project is under the MIT License.
