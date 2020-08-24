@@ -31,7 +31,7 @@ All publically available commands are listed below.
 
 ```bash
 $ rando --import path/to/example.csv
-Import Successful: Collection: example
+Import Successful: Collection Name: example
 ```
 
 Every import will save the data as a new collection and set it as the current set. By default, if no collection name is provided using the secondary flag `--cname <name>`, the name will result in the file name. The above example will have a collection saved with the name of `example`.
@@ -43,7 +43,7 @@ Every import will save the data as a new collection and set it as the current se
 
 ```bash
 $ randon --import path/to/example.csv --cname "My first Collection"
-Import Successful: Collection: My first Collection
+Import Successful: Collection Name: My first Collection
 ```
 - Note: Collection Names are unique
 
