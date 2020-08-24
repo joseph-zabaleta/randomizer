@@ -7,6 +7,7 @@ const { program } = require('commander');
 const pairs = require('./lib/pairs/pair-logic.js');
 const fileImport = require('./lib/import/import-logic.js');
 const settings = require('./lib/settings/settings.js');
+const display = require('./lib/display/display.js');
 
 program
     .description('An application to create random groups')
@@ -14,7 +15,8 @@ program
     .option('--cname <name>', 'Collection name: Optional secondary flag for file name')
     .option('-p, --pairs', 'random pairs')
     .option('-d, --default [new set]', 'View current active set or if a value is provided, update the current active set to the value provided.')
-    .option('-l, --list', 'List all available/imported collections');
+    .option('-l, --list', 'List all available/imported collections')
+    .option('--last-group', 'Display the last grouping');
 
 
 let userInput = program.parse(process.argv);
@@ -34,12 +36,15 @@ if (userInput.import) {
         settings.save();
     };
 
-    console.log(`Current set: ${settings.getDefault()}`);
+    display.printDefaultSet();
+
 } else if (userInput.list) {
 
-    console.log(`Current set: ${settings.getDefault()}\n`);
-    console.log('Available Collections:');
-    console.log(settings.getCollections());
+    display.printAllCollections();
+
+} else if (userInput.lastGroup) {
+
+    display.printPreviousMatrix();
 
 }
 
